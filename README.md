@@ -23,6 +23,7 @@ services:
     security_opt:
       - seccomp=unconfined
     restart: unless-stopped
+    stop_grace_period: 120s
 ```
 Place your config file in `./Config` or set `INTERACTIVE_CONFIG=y` (see above) and run the script interactively:
 
@@ -41,5 +42,6 @@ docker run -d \
   --runtime amd \
   --security-opt seccomp=unconfined \
   --restart unless-stopped \
+  --stop-timeout 120 \
   leom0/rainbowminer-rocm:latest
 ```

@@ -6,11 +6,12 @@ RUN mkdir /RainbowMiner
 RUN unzip tmp.zip -d /RainbowMiner
 RUN rm tmp.zip
 RUN bash /RainbowMiner/install.sh
-RUN echo 'test -n "$INTERACTIVE_CONFIG" && tail -f /dev/null || bash /RainbowMiner/start.sh' > /entrypoint.sh
+COPY ./entrypoint.sh /entrypoint.sh
 
 RUN mkdir -p /etc/OpenCL/vendors && \
     find /opt/rocm -name "libamdocl64.so" 2>/dev/null | head -n 1 > /etc/OpenCL/vendors/amdocl64.icd
 RUN rm -rf /var/lib/apt/lists/*
 
 ENV AMD_VISIBLE_DEVICES=0
-ENTRYPOINT bash /entrypoint.sh
+ENTRYPOINT ["bash", "/entrypoint.sh"]
+
